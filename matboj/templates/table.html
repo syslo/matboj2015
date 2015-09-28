@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load helpers %}
+
+{% block content %}
+
+  <div class="row">
+    {% for col in cols %}
+      <div class={{ cls }}>
+        <h2>{{ col }}</h2>
+        {% with tables|get_item:col as table %}
+          {% for row in table %}
+            <strong>{{ row.0 }}</strong>: {{ row.1 }}<br/>
+          {% endfor %}
+        {% endwith %}
+      </div>
+    {% endfor %}
+  </div>
+
+{% endblock %}
+
+{% block script %}
+
+  <script>
+    function again(){
+      $("html, body").animate(
+        {scrollTop: 0},
+        1000,
+        "swing",
+        function(){location.reload()}
+      );
+    }
+
+    function scroll(){
+      $("html, body").animate(
+        {scrollTop: $(document).height()-$(window).height()},
+        15000,
+        "linear"
+      );
+      setTimeout(again, 20000);
+    }
+
+    setTimeout(scroll, 5000);
+  </script>
+
+{% endblock %}
